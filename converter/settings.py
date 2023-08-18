@@ -12,9 +12,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get("DJANGO_DEBUG"))
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    h.strip() for h in os.environ.get("ALLOWED_HOSTS").split(",")
+    if h.strip()
+]
 
 
 # Application definition
@@ -73,7 +76,7 @@ DATABASES = {
     "default": {},
     "auth_db": {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'authdb',
+        'NAME': os.environ.get("MYSQL_DATABASE"),
         'USER': os.environ.get("DB_USER"),
         'PASSWORD': os.environ.get("DB_PASSWORD"),
         'HOST': os.environ.get("SQL_HOST"),
