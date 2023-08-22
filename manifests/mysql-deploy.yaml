@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: mysql
-        image: mysql:5.7
+        image: mysql:8.0
         ports:
         - containerPort: 3306
         envFrom:
@@ -23,5 +23,10 @@ spec:
         env:
         - name: MYSQL_DATABASE
           value: "authdb"
-        - name: DB_USER
-          value: "root"
+        - name: MYSQL_USER
+          value: "duser"
+        - name: MYSQL_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: mysql-secret
+              key: MYSQL_USER_PASSWORD
