@@ -23,10 +23,8 @@ spec:
         env:
         - name: MYSQL_DATABASE
           value: "authdb"
-        - name: MYSQL_USER
-          value: "duser"
         - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
               name: mysql-secret
-              key: MYSQL_USER_PASSWORD
+              key: MYSQL_ROOT_PASSWORD
