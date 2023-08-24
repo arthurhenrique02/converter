@@ -4,10 +4,11 @@ metadata:
   name: django-configmap
 data:
   ALLOWED_HOSTS: |
-    localhost
-    10.0.0.1
+    localhost:127.0.0.1
+    10.0.0.1:10.0.0.1
   SQL_HOST: mysql-service
   SQL_PORT: "3306"
   SECRET_KEY: "django-insecure-6^7+0qxx%$%!%mhh0rnk$_w(87wu@_6y8jj-ao)+6a(e1*4fgd"
   DJANGO_DEBUG: "False"
-  DB_USER: "duser"
+  DB_USER: "root"
+  MYSQL_DATABASE: "authdb"
