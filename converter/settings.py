@@ -82,8 +82,19 @@ DATABASES = {
         'HOST': os.environ.get("SQL_HOST"),
         'PORT': os.environ.get("SQL_PORT"),
     },
+    "files_db":
+    {
+        # using djongo as engine
+        # this will able to use gridfs without istalling other depencies
+        'ENGINE': 'djongo',
+        'NAME': 'filesdb',
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            # connect mongodb to minikube cluster
+            'host': 'mongodb://host.minikube.internal:27017/videos'
+        }
+    }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
