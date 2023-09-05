@@ -1,3 +1,5 @@
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
@@ -31,12 +33,16 @@ class LoginViewSet(ModelViewSet):
         password = request.data["password"]
 
         # get user
-        user = User.objects.get(username=username)
+        # user = User.objects.get(user=username)
 
-        # check user
-        if not User.objects.get(username=username):
+        user = authenticate(user=username, password=password)
+        # check useruser
+        if not user:
+            print("INVALID")
             return Response("invalid user")
-        elif user.password != password:
+        elif user:
+            print("INVALID PASSWORD")
             return Response("Invalid password")
 
-        return super().create(request, *args, **kwargs)
+        return Response("logged")
+        # return super().create(request, *args, **kwargs)
