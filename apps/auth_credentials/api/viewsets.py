@@ -1,17 +1,17 @@
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.pagination import LimitOffsetPagination
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet
-
-from apps.auth_credentials.models import User
+from rest_framework import generics
 
 from .serializers import AuthSerializer
 
 
-class LoginViewSet(ModelViewSet):
+class LoginViewSet(generics.CreateAPIView):
     # add auth
     # authentication_classes = (TokenAuthentication,)
 
@@ -32,17 +32,15 @@ class LoginViewSet(ModelViewSet):
         username = request.data["user"]
         password = request.data["password"]
 
-        # get user
-        # user = User.objects.get(user=username)
+        # authenticate user
+        user = authenticate(username=username, password=password)
 
-        user = authenticate(user=username, password=password)
-        # check useruser
+        # check if user`s invalid
         if not user:
             print("INVALID")
-            return Response("invalid user")
-        elif user:
-            print("INVALID PASSWORD")
-            return Response("Invalid password")
+            raise ValidationError("Invalid USERNAME or PASSWORD")
+    
+        # by default, just login
 
         return Response("logged")
         # return super().create(request, *args, **kwargs)
