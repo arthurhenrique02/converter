@@ -114,6 +114,12 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# changing default hasher
+PASSWORD_HASHERS = [
+    hasher.strip() for hasher in os.environ.get("DJANGO_HASHER").split(",")
+    if hasher.strip()
+]
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
