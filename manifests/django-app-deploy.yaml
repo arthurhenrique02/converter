@@ -21,9 +21,9 @@ spec:
         - configMapRef:
             name: django-configmap
         env:
-        - name: DB_PASSWORD
+        - name: MYSQL_PASSWORD
           valueFrom:
             secretKeyRef:
               name: django-secret
-              key: DB_PASSWORD
+              key: MYSQL_PASSWORD
         

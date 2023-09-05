@@ -77,21 +77,21 @@ DATABASES = {
     "auth_db": {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': os.environ.get("MYSQL_DATABASE"),
-        'USER': os.environ.get("DB_USER"),
-        'PASSWORD': os.environ.get("DB_PASSWORD"),
-        'HOST': os.environ.get("SQL_HOST"),
-        'PORT': os.environ.get("SQL_PORT"),
+        'USER': os.environ.get("MYSQL_USER"),
+        'PASSWORD': os.environ.get("MYSQL_PASSWORD"),
+        'HOST': os.environ.get("MYSQL_HOST"),
+        'PORT': os.environ.get("MYSQL_PORT"),
     },
     "files_db":
     {
         # using djongo as engine
         # this will able to use gridfs without istalling other depencies
         'ENGINE': 'djongo',
-        'NAME': 'filesdb',
+        'NAME': os.environ.get("MONGO_DATABASE"),
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
-            # connect mongodb to minikube cluster
-            'host': 'mongodb://host.minikube.internal:27017/videos'
+            # connect mongodb to minikube cluster or localhost
+            'host': os.environ.get("MONGO_HOST", "mongodb://localhost:27017")
         }
     }
 }
