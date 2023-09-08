@@ -1,6 +1,5 @@
+import os
 from pathlib import Path
-
-from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -10,12 +9,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY")
+SECRET_KEY = os.environ.get("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(os.environ.get("DJANGO_DEBUG"))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    h.strip() for h in os.environ.get("ALLOWED_HOSTS").split(",")
+    if h.strip()
+]
 
 
 # Application definition
@@ -74,14 +76,25 @@ DATABASES = {
     "default": {},
     "auth_db": {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'authdb',
-        'USER': 'root',
-        'PASSWORD': 'admin',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'NAME': os.environ.get("MYSQL_DATABASE"),
+        'USER': os.environ.get("MYSQL_USER"),
+        'PASSWORD': os.environ.get("MYSQL_PASSWORD"),
+        'HOST': os.environ.get("MYSQL_HOST"),
+        'PORT': os.environ.get("MYSQL_PORT"),
     },
+    "files_db":
+    {
+        # using djongo as engine
+        # this will able to use gridfs without istalling other depencies
+        'ENGINE': 'djongo',
+        'NAME': os.environ.get("MONGO_DATABASE"),
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            # connect mongodb to minikube cluster or localhost
+            'host': os.environ.get("MONGO_HOST", "mongodb://localhost:27017")
+        }
+    }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -99,6 +112,12 @@ AUTH_PASSWORD_VALIDATORS = [
     {
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
+]
+
+# changing default hasher
+PASSWORD_HASHERS = [
+    hasher.strip() for hasher in os.environ.get("DJANGO_HASHER").split(",")
+    if hasher.strip()
 ]
 
 
@@ -123,3 +142,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+REST_FRAMEWORK = {
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.LimitOffsetPagination",
+    "PAGE_SIZE": 30,
+}
