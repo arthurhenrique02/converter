@@ -4,5 +4,5 @@ from django.urls import include, path
 urlpatterns = [
     path("admin/", admin.site.urls),
     # add Login to path
-    path("login/", include("apps.auth_credentials.urls")),
+    path("auth/", include("apps.auth_credentials.urls")),
 ]
