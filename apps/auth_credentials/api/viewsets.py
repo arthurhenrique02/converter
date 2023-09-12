@@ -11,21 +11,16 @@ from .serializers import AuthSerializer
 
 
 class LoginViewSet(CreateAPIView, ViewSet):
-    # query
-    queryset = User.objects.all()
-
     # define serializer
     serializer_class = AuthSerializer
 
-    # pagination_class = LimitOffsetPagination
-    # overrid POST method to get login credentials
-
+    # override POST method to get login credentials
     def create(self, request, *args, **kwargs):
         # get user and password sent
         try:
             username = request.data["username"]
             password = request.data["password"]
-        except:
+        except Exception:
             return Response(
                 {"message": "Missing credentials (username or password)"}
             )
@@ -38,17 +33,12 @@ class LoginViewSet(CreateAPIView, ViewSet):
             return Response({"message": "Invalid USERNAME or PASSWORD"}, 404)
 
         # by default, just login
-        return Response({"message": "Logged in"}, 200)
+        return Response({"message": "Logged in"}, 202)
 
 
 class LogoutViewSet(CreateAPIView, ViewSet):
-    # query
-    queryset = User.objects.all()
-
     # define serializer
     serializer_class = AuthSerializer
-
-    pagination_class = LimitOffsetPagination
 
     # override POST method to just logout
     def create(self, request, *args, **kwargs):
@@ -59,13 +49,8 @@ class LogoutViewSet(CreateAPIView, ViewSet):
 
 
 class CreateUserViewSet(CreateAPIView, ViewSet):
-    # query
-    queryset = User.objects.all()
-
     # define serializer
     serializer_class = AuthSerializer
-
-    pagination_class = LimitOffsetPagination
 
     # override POST
     def create(self, request, *args, **kwargs):
@@ -92,5 +77,4 @@ class CreateUserViewSet(CreateAPIView, ViewSet):
         new_user.email = email
         new_user.save()
 
-        # create_auth_token.send(new_user, created=True)
-        return Response({"message": "User created"}, 200)
+        return Response({"message": "User created"}, 201)
