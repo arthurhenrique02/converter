@@ -11,6 +11,7 @@ echo "🟢 Running Django Migrations..."
 # make authdb migrations
 /venv/bin/python manage.py makemigrations --noinput
 /venv/bin/python manage.py migrate --database=auth_db --noinput
+/venv/bin/python manage.py migrate --database=files_db --noinput
 
 # Inicia o servidor Django
 echo "🟢 Starting Django Server..."
