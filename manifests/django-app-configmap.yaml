@@ -22,4 +22,5 @@ data:
     django.contrib.auth.hashers.BCryptSHA256PasswordHasher,
     django.contrib.auth.hashers.ScryptPasswordHasher,"
 
-  
+  VIDEO_QUEUE: "video"
+  MP3_QUEUE: "mp3"
