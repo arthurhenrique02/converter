@@ -15,7 +15,15 @@ grid_fs_storage = GridFSStorage(
 # Create your models here.
 
 
-class File(models.Model):
+class Videos(models.Model):
+
+    # change storage format as grid_fs
+    # gridFS is an storage format to storage files greater than 16MB and
+    # not loss quality
+    file = models.FileField(storage=grid_fs_storage)
+
+
+class MP3(models.Model):
 
     # change storage format as grid_fs
     # gridFS is an storage format to storage files greater than 16MB and
