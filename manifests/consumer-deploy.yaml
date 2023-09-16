@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: consumer
+  labels:
+    app: consumer
+spec:
+  replicas: 2
+  selector:
+    matchLabels: 
+      app: consumer
+  strategy: 
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 4
+  template:
+    metadata:
+      labels:
+        app: consumer
+    spec:
+      containers:
+        - name: consumer
+          image: arthurhenrique02/consumer:latest
+          envFrom:
+            - configMapRef:
+                name: consumer-configmap
+            - secretRef:
+                name: consumer-secret
+
