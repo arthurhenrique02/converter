@@ -1,5 +1,6 @@
 import pika
 from django.contrib.auth.models import User
+from rest_framework import status
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import CreateAPIView
 from rest_framework.pagination import LimitOffsetPagination
@@ -7,7 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
-from apps.converter_service.models import File
+from apps.converter_service.models import Videos
 from apps.converter_service.util.upload import upload
 from converter.rmq_server import channel
 
@@ -16,7 +17,7 @@ from .serializers import UploadSerializer
 
 class UploadViewSet(CreateAPIView, ViewSet):
 
-    queryset = File.objects.all()
+    queryset = Videos.objects.all()
 
     serializer_class = UploadSerializer
 
@@ -29,13 +30,16 @@ class UploadViewSet(CreateAPIView, ViewSet):
 
         # check files
         if len(request.data["file"]) != 1:
-            return Response({"message": "Exactly one file required"}, 400)
+            return Response(
+                {"message": "Exactly one file required"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
         # upload file
         file_upload_status = upload(request=request, channel=channel)
 
         # return 200 when send to rmq
-        return Response({"message": "success"}, 200)
+        return Response({"message": "success"}, status=status.HTTP_200_OK)
 
 
 class DownloadViewSet(CreateAPIView, ViewSet):

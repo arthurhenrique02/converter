@@ -2,7 +2,7 @@ import json
 
 import pika
 
-from apps.converter_service.models import File
+from apps.converter_service.models import Videos
 
 
 def upload(request, channel):
@@ -14,7 +14,7 @@ def upload(request, channel):
     """
     try:
         # get file instance
-        file = File.objects.create(file=request.data["file"])
+        file = Videos.objects.create(file=request.data["file"])
 
         file.save()
     except Exception:

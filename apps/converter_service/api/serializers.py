@@ -1,11 +1,11 @@
 from rest_framework import serializers
 
-from apps.converter_service.models import File
+from apps.converter_service.models import Videos
 
 
 class UploadSerializer(serializers.ModelSerializer):
     class Meta:
 
-        model = File
+        model = Videos
 
         fields = ["id", "file"]
