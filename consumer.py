@@ -1,11 +1,20 @@
 import os
+
+# enable `consumer` to use django ORM
+# Order matters, that`s the cause that is on this way
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "converter.settings")
+
+import django
+
+django.setup()
+
 import sys
 import time
 
 import pika
-from convert import to_mp3
 
 from apps.converter_service.models import MP3, Videos
+from convert import to_mp3
 from converter.rmq_server import channel
 
 
