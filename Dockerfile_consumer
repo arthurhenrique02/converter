@@ -28,9 +28,8 @@ COPY ./scripts /scripts
 RUN python -m venv /venv && \
     /venv/bin/pip install --upgrade pip && \
     apt-get update &&\
-    apt-get upgrade -y && \
-    apt-get install -y gcc default-libmysqlclient-dev pkg-config && \
-    apt-get install -y ffmpeg && \
+    apt-get install -y --no-install-recommends --no-install-suggests \
+    build-essential default-libmysqlclient-dev pkg-config ffmpeg && \
     /venv/bin/pip install --no-cache-dir -r /app/requirements.txt && \
     adduser --gecos "" --disabled-password --no-create-home duser && \
     chown -R duser:duser /venv && \
@@ -39,9 +38,9 @@ RUN python -m venv /venv && \
 
 
 # add venv and scripts folder to path
-ENV PATH="/scripts:/venv/bin:$PATH"
+ENV PATH="/scripts:/venv/bin:/apps:$PATH"
 
 # change user
 USER duser
 # to run the application
-CMD ["python", "/consumer/consumer.py"]
+CMD ["python3", "consumer.py"]
