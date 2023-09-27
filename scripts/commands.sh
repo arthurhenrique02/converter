@@ -10,7 +10,13 @@ echo "🟢 Running Django Migrations..."
 
 # make authdb migrations
 /venv/bin/python manage.py makemigrations --noinput
-/venv/bin/python manage.py migrate --database=auth_db --noinput
+
+# migrate django default apps to mysql db
+/venv/bin/python manage.py migrate admin auth contenttypes sessions messages staticfiles --database=auth_db --noinput
+
+# migrate created apps
+/venv/bin/python manage.py migrate auth_credentials --database=auth_db --noinput
+# mongodb database
 /venv/bin/python manage.py migrate --database=files_db --noinput
 
 # Inicia o servidor Django
