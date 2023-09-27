@@ -74,6 +74,7 @@ WSGI_APPLICATION = "converter.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASE_ROUTERS = [
     "apps.auth_credentials.dbRouter.authRouter.AuthRouter",
+    "apps.converter_service.dbRouter.serviceRouter.ServiceRouter",
 ]
 
 
@@ -96,7 +97,8 @@ DATABASES = {
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
             # connect mongodb to minikube cluster or localhost
-            'host': os.environ.get("MONGO_HOST", "mongodb://localhost:27017")
+            'host': os.environ.get("MONGO_HOST"),
+            'port': int(os.environ.get("MONGO_PORT"))
         }
     }
 }
