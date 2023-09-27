@@ -14,7 +14,9 @@ data:
   MYSQL_DATABASE: "authdb"
 
   MONGO_DATABASE: "filesdb"
-  MONGO_HOST: "mongodb://host.minikube.internal:27017/videos"
+  MONGO_HOST: "mongodb://host.minikube.internal"
+  MONGO_PORT: "27017"
+
 
   DJANGO_HASHER: "django.contrib.auth.hashers.Argon2PasswordHasher,
     django.contrib.auth.hashers.PBKDF2PasswordHasher,
