@@ -1,20 +1,19 @@
 import os
 
 from django.conf import settings
-from django.db import models
+from djongo import models
 from djongo.storage import GridFSStorage
 
 # GridFs instance
 grid_fs_storage = GridFSStorage(
     collection='videosCollection',
     base_url=''.join(
-        [os.environ.get("MONGO_HOST", "mongodb://localhost:27017"), 'filesdb/']
+        [os.environ.get("MONGO_HOST"), ":27017/", 'filesdb/']
     )
 )
 
+
 # Create your models here.
-
-
 class Videos(models.Model):
 
     # change storage format as grid_fs
