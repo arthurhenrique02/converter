@@ -39,7 +39,7 @@ class UploadViewSet(CreateAPIView, ViewSet):
         file_upload_status = upload(request=request, channel=channel)
 
         # return 200 when send to rmq
-        return Response({"message": "success"}, status=status.HTTP_200_OK)
+        return Response(*file_upload_status)
 
 
 class DownloadViewSet(CreateAPIView, ViewSet):
