@@ -5,7 +5,8 @@ class AuthRouter:
     """
 
     # to check app`s name labels
-    route_app_labels = {"auth_credentials", "auth"}
+    route_app_labels = {"auth_credentials", "auth", "admin",
+                        "contenttypes", "sessions", "messages", "staticfiles", "authtoken"}
 
     def db_for_read(self, model, **hints):
         """
