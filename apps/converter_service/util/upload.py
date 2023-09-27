@@ -21,6 +21,7 @@ def upload(request, channel):
         # return an error message and status
         return ({"message": "internal server error"}, 500)
 
+    # create a message to send to rabbitmq
     message = {
         "video_file_id": str(file.id),
         "mp3_file_id": None,
@@ -50,3 +51,6 @@ def upload(request, channel):
 
         # return an error message and status
         return ({"message": "internal server error"}, 500)
+
+    # return http status 200
+    return ({"message": "uploaded"}, 200)
