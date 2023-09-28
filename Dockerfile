@@ -37,6 +37,7 @@ RUN python -m venv /venv && \
     /venv/bin/pip install --no-cache-dir -r /app/requirements.txt && \
     adduser --gecos "" --disabled-password --no-create-home duser && \
     chown -R duser:duser /venv && \
+    chown -R duser:duser /app && \
     chmod -R +x /scripts
 
 

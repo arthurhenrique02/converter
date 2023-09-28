@@ -9,7 +9,8 @@ grid_fs_storage = GridFSStorage(
     collection='videosCollection',
     base_url=''.join(
         [os.environ.get("MONGO_HOST"), ":27017/", 'filesdb/']
-    )
+    ),
+    database="files_db"
 )
 
 
