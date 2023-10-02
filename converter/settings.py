@@ -1,9 +1,9 @@
 import os
 from pathlib import Path
 
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
-load_dotenv()  # take environment variables from .env.
+# load_dotenv()  # take environment variables from .env.
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,7 +35,8 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework.authtoken",
-    "apps.auth_credentials"
+    "apps.auth_credentials",
+    "apps.converter_service",
 ]
 
 MIDDLEWARE = [
@@ -73,6 +74,7 @@ WSGI_APPLICATION = "converter.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASE_ROUTERS = [
     "apps.auth_credentials.dbRouter.authRouter.AuthRouter",
+    "apps.converter_service.dbRouter.serviceRouter.ServiceRouter",
 ]
 
 
@@ -95,7 +97,8 @@ DATABASES = {
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
             # connect mongodb to minikube cluster or localhost
-            'host': os.environ.get("MONGO_HOST", "mongodb://localhost:27017")
+            'host': os.environ.get("MONGO_HOST"),
+            'port': int(os.environ.get("MONGO_PORT"))
         }
     }
 }
@@ -142,17 +145,20 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 
+# configure media root
+MEDIA_ROOT = "documents"
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication'
-    ],
-    "DEFAULT_PAGINATION_CLASS": [
-        "rest_framework.pagination.LimitOffsetPagination",
-    ],
-    "PAGE_SIZE": 30,
-}
+# REST_FRAMEWORK = {
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.TokenAuthentication'
+#     ],
+#     # "DEFAULT_PAGINATION_CLASS": [
+#     #     "rest_framework.pagination.LimitOffsetPagination",
+#     # ],
+#     # "PAGE_SIZE": 30,
+# }

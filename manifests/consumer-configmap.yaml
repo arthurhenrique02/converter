@@ -1,9 +1,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: django-configmap
+  name: consumer-configmap
 data:
-  ALLOWED_HOSTS: localhost:127.0.0.1, 10.0.0.1:10.0.0.1, mp3converter.com
+  ALLOWED_HOSTS: |
+    localhost:127.0.0.1
+    10.0.0.1:10.0.0.1
   MYSQL_HOST: mysql-service
   MYSQL_PORT: "3306"
   SECRET_KEY: "django-insecure-6^7+0qxx%$%!%mhh0rnk$_w(87wu@_6y8jj-ao)+6a(e1*4fgd"
@@ -14,7 +16,6 @@ data:
   MONGO_DATABASE: "filesdb"
   MONGO_HOST: "mongodb://host.minikube.internal"
   MONGO_PORT: "27017"
-
 
   DJANGO_HASHER: "django.contrib.auth.hashers.Argon2PasswordHasher,
     django.contrib.auth.hashers.PBKDF2PasswordHasher,

@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gateway-ingress
+  annotations:
+    # nginx is the default engine to ingress
+    # thi allows 
+    # "0" is going to allow any size
+    nginx.ingress.kubernetes.ip/proxy-body-size: "0"
+    nginx.ingress.kubernetes.ip/proxy-read-timeout: "600"
+    nginx.ingress.kubernetes.ip/proxy-send-timeout: "600"
+spec:
+  rules:
+    - host: mp3converter.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: django-service
+                port: 
+                  number: 8000
