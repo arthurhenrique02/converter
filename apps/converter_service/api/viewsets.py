@@ -27,14 +27,12 @@ class UploadViewSet(CreateAPIView, ViewSet):
 
     # Override post
     def create(self, request, *args, **kwargs):
-
         # check files
-        if len(request.data["file"]) != 1:
+        if len(request.FILES) != 1:
             return Response(
                 {"message": "Exactly one file required"},
                 status=status.HTTP_400_BAD_REQUEST
             )
-
         # upload file
         file_upload_status = upload(request=request, channel=channel)
 
