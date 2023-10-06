@@ -14,7 +14,7 @@ def upload(request, channel):
     """
     try:
         # get file instance
-        file = Videos.objects.create(file=request.data["file"])
+        file = Videos.objects.create(file=request.FILES["file"])
 
         file.save()
     except Exception:
@@ -23,9 +23,9 @@ def upload(request, channel):
 
     # create a message to send to rabbitmq
     message = {
-        "video_file_id": str(file.id),
+        "video_file_id": str(file._id),
         "mp3_file_id": None,
-        "username": request.data["username"]
+        "username": request.user.id
     }
 
     try:
