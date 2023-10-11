@@ -1,6 +1,7 @@
 import json
 
 import pika
+from bson.objectid import ObjectId
 
 from apps.converter_service.models import Videos
 
@@ -23,7 +24,7 @@ def upload(request, channel):
 
     # create a message to send to rabbitmq
     message = {
-        "video_file_id": str(file._id),
+        "video_file_id": file.id,
         "mp3_file_id": None,
         "username": request.user.id
     }

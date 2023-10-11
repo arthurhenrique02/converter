@@ -20,11 +20,13 @@ def start(message, videos, mp3s, channel):
     # not from the string id (as we defined when created message object on
     # upload.py)
     # so we use ObejectId to create this id object and search on db
-    video = Videos.objects.get(ObjectId(message["video_file_id"]))
+    video = Videos.objects.get(id=message["video_file_id"])
 
     # add video content to temp file
     # read the bytes from the video and write through temp_file
-    temp_file.write(video.file.read)
+    # TODO:
+    # CHANGE OPENNING FILE METHOD
+    temp_file.write(open(video.file, "rb"))
 
     # convert the video file to audio file
     # VideoFileClip will get the temp_file path and extract the audio
