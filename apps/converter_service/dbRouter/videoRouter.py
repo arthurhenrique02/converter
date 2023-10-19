@@ -1,4 +1,4 @@
-class ServiceRouter:
+class VideoRouter:
     """
     A router to control all database operations on models in the
     converter service application.
@@ -9,21 +9,21 @@ class ServiceRouter:
 
     def db_for_read(self, model, **hints):
         """
-        Attempts to read converter_service model go to files_db.
+        Attempts to read converter_service model go to videos_db.
         """
         # check`s if app name == auth
         if model._meta.app_label in self.route_app_labels:
             # returns access to auth db
-            return "files_db"
+            return "videos_db"
         return None
 
     def db_for_write(self, model, **hints):
         """
-        Attempts to write converter_service model go to files_db.
+        Attempts to write converter_service model go to videos_db.
         """
         if model._meta.app_label in self.route_app_labels:
             # returns access to auth db
-            return "files_db"
+            return "videos_db"
         return None
 
     def allow_relation(self, obj1, obj2, **hints):
@@ -42,9 +42,9 @@ class ServiceRouter:
     def allow_migrate(self, db, app_label, model_name=None, **hints):
         """
         Make sure the converter_service app only appear in the
-        'files_db' database.
+        'videos_db' database.
         """
         if app_label in self.route_app_labels:
             # returns access to auth db
-            return db == "files_db"
+            return db == "videos_db"
         return None

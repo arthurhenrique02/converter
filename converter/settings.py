@@ -74,7 +74,8 @@ WSGI_APPLICATION = "converter.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASE_ROUTERS = [
     "apps.auth_credentials.dbRouter.authRouter.AuthRouter",
-    "apps.converter_service.dbRouter.serviceRouter.ServiceRouter",
+    "apps.converter_service.dbRouter.videoRouter.VideoRouter",
+    "apps.converter_service.dbRouter.mp3Router.Mp3Router",
 ]
 
 
@@ -88,19 +89,32 @@ DATABASES = {
         'HOST': os.environ.get("MYSQL_HOST"),
         'PORT': os.environ.get("MYSQL_PORT"),
     },
-    "files_db":
+    "videos_db":
     {
         # using djongo as engine
         # this will able to use gridfs without istalling other depencies
         'ENGINE': 'djongo',
-        'NAME': os.environ.get("MONGO_DATABASE"),
+        'NAME': os.environ.get("VIDEOS_DATABASE"),
         'ENFORCE_SCHEMA': False,
         'CLIENT': {
             # connect mongodb to minikube cluster or localhost
             'host': os.environ.get("MONGO_HOST"),
             'port': int(os.environ.get("MONGO_PORT"))
         }
-    }
+    },
+    "mp3s_db":
+    {
+        # using djongo as engine
+        # this will able to use gridfs without istalling other depencies
+        'ENGINE': 'djongo',
+        'NAME': os.environ.get("MP3S_DATABASE"),
+        'ENFORCE_SCHEMA': False,
+        'CLIENT': {
+            # connect mongodb to minikube cluster or localhost
+            'host': os.environ.get("MONGO_HOST"),
+            'port': int(os.environ.get("MONGO_PORT"))
+        }
+    },
 }
 
 # Password validation
