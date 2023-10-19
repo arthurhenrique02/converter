@@ -10,7 +10,7 @@ echo "🟢 Running Django Migrations..."
 
 # make authdb migrations
 /venv/bin/python manage.py makemigrations --noinput
-
+/venv/bin/python manage.py makemigrations converter_service --noinput
 
 
 # migrate created apps
@@ -19,7 +19,8 @@ echo "🟢 Running Django Migrations..."
 echo "MYSQL MIGRATIONS DONE"
 
 # mongodb database
-/venv/bin/python manage.py migrate --database=files_db --noinput
+/venv/bin/python manage.py migrate --database=videos_db --noinput
+/venv/bin/python manage.py migrate --database=mp3s_db --noinput
 
 echo "MONGO MIGRATIONS DONE"
 
