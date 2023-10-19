@@ -4,7 +4,6 @@ import tempfile
 
 import moviepy.editor
 import pika
-from bson.objectid import ObjectId
 from django.core.files.base import ContentFile
 
 from apps.converter_service.models import MP3, Videos
@@ -25,9 +24,6 @@ def start(message, videos, mp3s, channel):
 
     # add video content to temp file
     # read the bytes from the video and write through temp_file
-    # TODO:
-    # CHANGE OPENNING FILE METHOD
-    # Use the open method to open the file associated with the video instance in binary read mode
     with video.file.open('rb') as video_file:
         video_binary = video_file.read()
 
@@ -49,12 +45,17 @@ def start(message, videos, mp3s, channel):
     with open(temp_file_path, "rb") as audio_f:
         audio_data = audio_f.read()
 
-        audio_file = MP3.objects.create(file=ContentFile(audio_data))
+        audio_file = MP3.objects.using("mp3s_db").create(
+            file=ContentFile(audio_data))
 
-        audio_file.save()
+        print(audio_file.file)
+
+        audio_file.save(using="mp3s_db")
 
     # remove temp_file
     os.remove(temp_file_path)
+
+    print(audio_file.file)
 
     message["mp3_file_id"] = str(audio_file.id)
 

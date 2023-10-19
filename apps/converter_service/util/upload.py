@@ -18,7 +18,9 @@ def upload(request, channel):
         file = Videos.objects.create(file=request.FILES["file"])
 
         file.save()
-    except Exception:
+    except Exception as error:
+        print("PRIMEIRO ERRO")
+        print(error)
         # return an error message and status
         return ({"message": "internal server error"}, 500)
 
@@ -46,7 +48,9 @@ def upload(request, channel):
                 delivery_mode=pika.spec.PERSISTENT_DELIVERY_MODE
             )
         )
-    except Exception:
+    except Exception as error:
+        print("SEGUNDO ERRO")
+        print(error)
         # delete the file from db
         file.delete()
 
