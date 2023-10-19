@@ -51,7 +51,7 @@ class Migration(migrations.Migration):
                     "file",
                     models.FileField(
                         storage=djongo.storage.GridFSStorage(
-                            base_url="mongodb://host.minikube.internal:27017/filesdb/",
+                            base_url="mongodb://host.minikube.internal:27017/mp3sdb/",
                             collection="videosCollection",
                         ),
                         upload_to="",
