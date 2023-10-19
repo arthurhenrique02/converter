@@ -10,9 +10,17 @@ from rest_framework.viewsets import ViewSet
 
 from apps.converter_service.models import Videos
 from apps.converter_service.util.upload import upload
-from converter.rmq_server import channel
 
 from .serializers import UploadSerializer
+
+# create pika connection
+# BlockingConnection is a synchronous adapter
+# "rabbitmq" is referencing the rabbitmq host on minikube
+# this line is basicaly limiting connection to rabbitmq cluster
+connection = pika.BlockingConnection(pika.ConnectionParameters("rabbitmq"))
+
+# create a channel with the connection
+channel = connection.channel()
 
 
 class UploadViewSet(CreateAPIView, ViewSet):
