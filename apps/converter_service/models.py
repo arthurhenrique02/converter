@@ -1,6 +1,5 @@
 import os
 
-from django.conf import settings
 from djongo import models
 from djongo.storage import GridFSStorage
 
@@ -24,7 +23,7 @@ mp3s_grid_fs_storage = GridFSStorage(
 
 # Create your models here.
 class Videos(models.Model):
-
+    id = models.AutoField(primary_key=True)
     # change storage format as grid_fs
     # gridFS is an storage format to storage files greater than 16MB and
     # not loss quality
@@ -32,7 +31,7 @@ class Videos(models.Model):
 
 
 class MP3(models.Model):
-
+    id = models.AutoField(primary_key=True)
     # change storage format as grid_fs
     # gridFS is an storage format to storage files greater than 16MB and
     # not loss quality

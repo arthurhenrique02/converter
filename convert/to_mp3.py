@@ -43,11 +43,16 @@ def start(message, videos, mp3s, channel):
     audio.write_audiofile(temp_file_path)
 
     with open(temp_file_path, "rb") as audio_f:
+        # TODO:
+        # solve the problem that`s not reading the mp3 file and saving on db
         audio_data = audio_f.read()
 
-        audio_file = MP3.objects.using("mp3s_db").create(
+        audio_file = MP3.objects.create(
             file=ContentFile(audio_data))
 
+        # change mongo db id (_id) and django id
+
+        print(audio_file.__dict__)
         print(audio_file.file)
 
         audio_file.save(using="mp3s_db")
